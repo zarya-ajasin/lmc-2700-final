@@ -29,9 +29,12 @@ window.onload = function() {
     // the scroll speed
     // an important thing to ensure here is that can.height
     // is divisible by scrollSpeed
-    var scrollSpeed = 10;
+    var scrollSpeed = 0;
   // this is the primary animation loop that is called 60 times
     // per second
+
+    // #move screen from arrowkeys
+
     function loop()
     {
         // draw image 1
@@ -57,16 +60,34 @@ window.onload = function() {
     // this initiates the animation by calling the loop function
     // for the first time
     loop();
+
+
+    function moveLeft() {
+        var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+        if (left > -10) {
+        character.style.left = left - 2 + "px";
+        scrollSpeed += 2;
+        }
+    }
+    
+    function moveRight() {
+        var left = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
+        if (left < 1000) {
+        character.style.left = left + 2 + "px";
+        scrollSpeed += 2;
+        }
+    }
+    
+    document.addEventListener("keydown", event => {
+        if (both == 0) {
+            both++;
+        if (event.key == "ArrowLeft") {
+            interval = setInterval(moveLeft, 1);
+        }
+        if (event.key == "ArrowRight") {
+            interval = setInterval(moveRight, 1);
+        }
+    }
+    });
  
 }
-
-// class Background {
-//     constructor(gameWidth, gameHeight) {
-//         this.gameHeight = gameHeight;
-//         this.gameWidth = gameWidth;
-//         this.image = document.getElementById("backgroundImage")
-//         this.x = 0;
-//         this.y = 0;
-//         this.width = 
-//     }
-// }
