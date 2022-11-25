@@ -4,8 +4,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
+    background-color: #ffe2c2;
+	animation: change-color-anim 30s ease-in;
+}
+
+@keyframes change-color-anim {
+	0.0%{
+		background-color: #15102d;
+	}
+    12.5%{
+		background-color: #2D1D7A;
+	}
+    25.0%{
+		background-color: #573170;
+	}
+    37.5%{
+		background-color: #804565;
+	}
+    50.0%{
+		background-color: #AA585B;
+	}
+    62.5%{
+		background-color: #D36C50;
+	}
+    75.0%{
+		background-color: #FD8046;
+	}
+    87.5%{
+		background-color: #ffbc74;
+	}
+    100%{
+		background-color: #ffe2c2;
+	}
 }
 </style>
 </head>
@@ -26,6 +56,7 @@ function startGame() {
     myGameObstacle = new component(30, 30, "red", 200, 120, 3);
     pieces.push(myGameObstacle);
     pieces.push(myGamePowerup);
+    setTimeout(youLose, 30000);
 }
 
 var myGameArea = {
@@ -116,6 +147,22 @@ function updateGameArea() {
             console.log(isCollidingVar);
         }
     }    
+}
+
+//endgame
+function youLose() {
+    alert("You Lose!")
+    //here is where you would get a custom popup
+    document.getElementById('popup').style.display = "block";
+    //button to start game over
+    //button to go back to home page
+    document.getElementById("popupForm").style.display = "none";
+}
+
+function youWin() {
+    // if the goal was touched it directs here
+    //button to home page
+    //button to next stage
 }
 
 </script>
