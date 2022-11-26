@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link rel="stylesheet" href="style1.css">
+</head>
+    <body>
+        <div class = "container">
+            <h1>Luna
+            </h1>
+            <a href="main2.html">
+                <button class="playbtn">Play</button>
+            </a>
+            <button type = "howtoplay" class="btn" onclick="openPopup()">How To Play</button>
+            <div class ='popup' id="popup">
+                <h2>How To Play!</h2>
+                <p></p>
+                <h4>The object up the game is to finish the level 
+                    before the sun rises. You able to move forawrd, jump
+                    and duck using thhe arrow keys. There are some power up that
+                    will allow you to move faster, but beware some will make you move
+                    slower!
+                </h4>
+                <button type="button" onclick="closePopup()">Close</button>
+            </div>
+        </div>
+        <script>
+            let popup = document.getElementById("popup");
+            function openPopup() {
+                popup.classList.add("open-popup");
+            }
+            function closePopup() {
+                popup.classList.remove("open-popup");
+            }
+            
+        </script>
+    </body>
+</html>
