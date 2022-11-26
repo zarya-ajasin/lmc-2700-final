@@ -47,7 +47,18 @@ var myGamePowerup;
 var myGameObstacle;
 var varSpeed = 1;
 const pieces=[];
+const enemies= [];
+const friends= [];
 var isCollidingVar;
+var newFriend = false;
+var enemySpeed = 1;
+var loss = false;
+
+function random(n) {
+      return Math.floor(Math.random()*n);
+}
+//if the collision is true, what all needs to be updated?
+
 
 function startGame() {
     myGameArea.start();
@@ -80,6 +91,7 @@ var myGameArea = {
 }
 
 
+
 function component(width, height, color, x, y, type) {
     this.gamearea = myGameArea;
     this.width = width;
@@ -107,11 +119,11 @@ function component(width, height, color, x, y, type) {
       this.height + this.y > collidingBlock.y
     ) {
         //if colliding, change speed to 3 or 0.5 depending on type
-        console.log("collide = true");
+       // console.log("collide = true");
         return true;
     }
         //if not colliding, keep speed at 1
-        console.log("collide = false");
+     //   console.log("collide = false");
         varSpeed = 1;
         return false;
   }   
@@ -122,7 +134,7 @@ function updateGameArea() {
     myGamePiece.speedX = 0;
     myGamePiece.speedY = 0;    
     
-    console.log(isCollidingVar);
+    //console.log(isCollidingVar);
     if(isCollidingVar){
     varSpeed = pieces[isCollidingVar].type;
     }
@@ -134,6 +146,19 @@ function updateGameArea() {
     myGamePiece.newPos();    
     myGamePiece.update();
 
+    //make a new invader, prob inside the update function
+    //friends will hold components that are friends
+    if(friends.length < 4){
+    friends.push(new component(30, 30, "green",
+    random(480)+480, random(270)-20));
+    //random(myGameArea.canvas.width), random(canvas.height)));
+    }
+
+    if(enemies.length < 4){
+    enemies.push(new component(30, 30, "red",
+    random(480)+480, random(270)-20));
+    //random(myGameArea.canvas.width), random(canvas.height)));
+    }
     //this logic will allow you to update the position of each piece without calling 
     //every single one, you can add the original players piece to the array too
     isCollidingVar = 0;
@@ -144,19 +169,62 @@ function updateGameArea() {
         //  if collision us true, store the value of the index that caused the collision
         if(myGamePiece.isColliding(pieces[i])){
             isCollidingVar = i;
-            console.log(isCollidingVar);
+           // console.log(isCollidingVar);
         }
-    }    
+    }   
+ 
+    for (var i = 0; i<enemies.length; i++){
+        //add logic to take away first in array if the arrau is 10+
+        if (enemies[i].x < -10 ){
+            enemies.splice(i, 1);
+            //this is where you would add logic to gain points
+        }
+        if(myGamePiece.isColliding(enemies[i])){
+            loss = true;
+        }
+        //the second cube is being marked at colliding but the value is
+        //actually move each cube
+        enemies[i].x -= 1;
+
+        //update position
+        enemies[i].newPos();
+        enemies[i].update(); 
+    } 
+
+    for (var i = 0; i<friends.length; i++){
+        //add logic to take away first in array if the the cube reaches the end
+        if (friends[i].x < -10 ){
+            friends.splice(i, 1);
+            //this is where you would add logic to gain points
+        }
+
+        //actually move each cube
+        friends[i].x -= 1;
+
+        //update position
+        friends[i].newPos();
+        friends[i].update(); 
+    } 
+    
+    if(loss){youLose();clearInterval(myGameArea.interval);}
 }
 
 //endgame
 function youLose() {
-    alert("You Lose!")
+    alert("You Lose! Reload the page a few times to restart!");
+    enemies(0,enemies.length);
+
     //here is where you would get a custom popup
     document.getElementById('popup').style.display = "block";
     //button to start game over
     //button to go back to home page
     document.getElementById("popupForm").style.display = "none";
+    document.getElementById(
+'close-btn').addEventListener('click', (e) => {
+            document.getElementById(
+'wrapper').style.visibility = "hidden";
+            window.location.reload();
+        });
 }
 
 function youWin() {
