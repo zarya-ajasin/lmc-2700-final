@@ -68,10 +68,6 @@
 <script >
 
 var myGamePiece;
-var myGamePowerup;
-var myGameObstacle;
-var varSpeed = 1;
-const pieces=[];
 const enemies= [];
 const friends= [];
 var isCollidingVar;
@@ -84,14 +80,13 @@ function random(n) {
 }
 //if the collision is true, what all needs to be updated?
 
+function randomBetween(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
 function startGame() {
     myGameArea.start();
-    myGamePiece = new component(30, 30, "blue", 10, 120, 1);
-    myGamePowerup = new component(30, 30, "green", 100, 120, 3);
-    myGameObstacle = new component(30, 30, "red", 200, 120, 3);
-    pieces.push(myGameObstacle);
-    pieces.push(myGamePowerup);
+    myGamePiece = new component(60, 60, "blue", 60, 200, 1);
     setTimeout(youLose, 30000);
 }
 
@@ -118,7 +113,7 @@ var myGameArea = {
 
 
 
-function component(width, height, color, x, y, type) {
+function component(width, height, color, x, y) {
     this.gamearea = myGameArea;
     this.width = width;
     this.height = height;
@@ -126,7 +121,6 @@ function component(width, height, color, x, y, type) {
     this.speedY = 0;    
     this.x = x;
     this.y = y;
-    this.type = type;
     this.update = function() {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
@@ -150,7 +144,6 @@ function component(width, height, color, x, y, type) {
     }
         //if not colliding, keep speed at 1
      //   console.log("collide = false");
-        varSpeed = 1;
         return false;
   }   
 }
@@ -161,14 +154,12 @@ function updateGameArea() {
     myGamePiece.speedY = 0;    
     
     //console.log(isCollidingVar);
-    if(isCollidingVar){
-    varSpeed = pieces[isCollidingVar].type;
-    }
+   
 
-    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = (-1 * varSpeed); }
-    if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = (1 * varSpeed); }
-    if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY = (-1 * varSpeed); }
-    if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY = (1 * varSpeed); }
+    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-3 }
+    if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =3 }
+    if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-3}
+    if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =3}
     myGamePiece.newPos();    
     myGamePiece.update();
 
@@ -182,23 +173,10 @@ function updateGameArea() {
 
     if(enemies.length < 4){
     enemies.push(new component(30, 30, "red",
-    random(480)+480, random(270)-20));
+    random(480)+480, randomBetween(200, 250)));
     //random(myGameArea.canvas.width), random(canvas.height)));
     }
-    //this logic will allow you to update the position of each piece without calling 
-    //every single one, you can add the original players piece to the array too
-    isCollidingVar = 0;
-    for (var i = 0; i<pieces.length; i++){
-        //the second cube is being marked at collising but the value is
-        pieces[i].newPos();
-        pieces[i].update(); 
-        //  if collision us true, store the value of the index that caused the collision
-        if(myGamePiece.isColliding(pieces[i])){
-            isCollidingVar = i;
-           // console.log(isCollidingVar);
-        }
-    }   
- 
+
     for (var i = 0; i<enemies.length; i++){
         //add logic to take away first in array if the arrau is 10+
         if (enemies[i].x < -10 ){
@@ -224,6 +202,19 @@ function updateGameArea() {
             //this is where you would add logic to gain points
         }
 
+        //power-up
+        if(myGamePiece.isColliding(friends[i])){
+          
+    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-6 }
+    if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =6 }
+    if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-6}
+    if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =6}
+    myGamePiece.newPos();    
+    myGamePiece.update();
+             console.log("green");
+             myGamePiece.newPos();    
+             myGamePiece.update();
+        }
         //actually move each cube
         friends[i].x -= 1;
 
