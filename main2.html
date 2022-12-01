@@ -9,10 +9,13 @@
     background-image: "bgd.png"; */
     /* background: url(bgd.png) 0 0, #ffe2c2 -91px 0; */
     background: url(dirt.jpg) 0 0;
-    background-size: 480px 100px;
+    background-size: 980px 100px;
     background-position: bottom;
     background-repeat: no-repeat;
-	animation: change-color-anim 30s ease-in;
+	animation: change-color-anim 30s ease-in, move 2s ease-in-out;
+    /* animation: move 2s; */
+
+    
 } 
 #imagearea a {
     width: 480px;
@@ -27,6 +30,15 @@
 #area2 {
     top: 90px;
     left: 40px;
+}
+
+@keyframes move {
+from {background-position: bottom right;}
+to {background-position: bottom left;}
+}
+
+@keyframes moving {
+from {background-position-x: + 5;}
 }
 
 @keyframes change-color-anim {
@@ -103,9 +115,6 @@ function randomBetween(min, max) {
 function startGame() {
     myGameArea.start();
     myGamePiece = new component(60, 60, "blue", 60, 200, 1);
-    // var can = document.getElementById('canvas');
-    // var ctx = can.getContext('2d');
-    // // bgd.draw(ctx);
     setTimeout(youLose, 30000);
 }
 
@@ -115,8 +124,6 @@ var myGameArea = {
         this.canvas.width = 480;
         this.canvas.height = 270;
         this.context = this.canvas.getContext("2d");
-        // bgd.draw(ctx);
-
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function (e) {
@@ -145,7 +152,6 @@ function component(width, height, color, x, y) {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-
     }
     this.newPos = function() {
         this.x += this.speedX;
@@ -174,6 +180,10 @@ function updateGameArea() {
     myGamePiece.speedX = 0;
     myGamePiece.speedY = 0;    
     
+    
+    // canvas.backgroundMove();
+
+
     //console.log(isCollidingVar);
    
 
@@ -370,6 +380,9 @@ var can = document.getElementById('canvas1');
 </script>
 <script src="main_javascript.js"></script>
 <p>use the arrow keys on you keyboard to move the square</p>
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="jquery.backgroundMove.js"></script>
 
 </body>
 </html>
