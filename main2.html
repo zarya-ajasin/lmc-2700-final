@@ -75,6 +75,21 @@ var newFriend = false;
 var enemySpeed = 1;
 var loss = false;
 
+class Background {
+    constructor(gameWidth, gameHeight) {
+        this.gamewidth = gamewidth;
+        this.gameHeight = gameHeight;
+        this.image = url(nightbg.png);
+        this.x = 0;
+        this.y - 0;
+        this.width = 2400;
+        this.height = 1648;
+    }
+    draw(canvas) {
+        canvas.drawImage(this.image, this.x, this.y);
+    }
+}
+
 function random(n) {
       return Math.floor(Math.random()*n);
 }
@@ -83,10 +98,14 @@ function random(n) {
 function randomBetween(min, max) {
   return Math.random() * (max - min) + min;
 }
+// const bgd = new Background(canvas.width, canvas.height);
 
 function startGame() {
     myGameArea.start();
     myGamePiece = new component(60, 60, "blue", 60, 200, 1);
+    // var can = document.getElementById('canvas');
+    // var ctx = can.getContext('2d');
+    // // bgd.draw(ctx);
     setTimeout(youLose, 30000);
 }
 
@@ -96,7 +115,8 @@ var myGameArea = {
         this.canvas.width = 480;
         this.canvas.height = 270;
         this.context = this.canvas.getContext("2d");
-        
+        // bgd.draw(ctx);
+
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function (e) {
@@ -125,6 +145,7 @@ function component(width, height, color, x, y) {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
+
     }
     this.newPos = function() {
         this.x += this.speedX;
