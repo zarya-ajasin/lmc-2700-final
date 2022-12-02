@@ -5,14 +5,15 @@
 <style>
     
 canvas {
-    /* background-color: #ffe2c2;
-    background-image: "bgd.png"; */
+
+   /* background-image: "bgd.png"; */
     /* background: url(bgd.png) 0 0, #ffe2c2 -91px 0; */
     background: url(dirt.jpg) 0 0;
+    background-color: #ffe2c2;
     background-size: 980px 100px;
     background-position: bottom;
     background-repeat: no-repeat;
-	animation:  move 2s ease-in-out, change-color-anim 30s ease-in;
+	/*animation:  move 2s ease-in-out, change-color-anim 30s ease-in;
     /* move 2s ease-in-out */
     /* animation: move 2s; */
 } 
@@ -80,7 +81,7 @@ from {background-position-x: + 5;}
     <a href = "start.html"> 
         <button class="homebtn">Home</button>
     </a>
-    
+    <canvas id="canvas"> </canvas>
 <script>
 
 var myGamePiece;
@@ -140,7 +141,8 @@ function startGame() {
 
 
 var myGameArea = {
-    canvas : document.createElement("canvas"),
+    canvas : document.getElementById('canvas'),
+    //canvas : document.createElement("canvas"),
     start : function() {
         this.canvas.width = 800;
         this.canvas.height = 400;
@@ -159,10 +161,12 @@ var myGameArea = {
     }
 }
 
-const bgd = new Background(canvas.width, canvas.height);
+
+/*const bgd = new Background(canvas.width, canvas.height);
 this.context = this.canvas.getContext("2d");
 bgd.draw(this.context);
 bgd.update();
+*/
 
 
 
@@ -223,76 +227,78 @@ function updateGameArea() {
 
     if (!is10) {
 
-    //make a new invader, prob inside the update function
-    //friends will hold components that are friends
-    if(friends.length < 4){
-    friends.push(new component(30, 30, "green",
-    random(480)+480, random(270)-20));
-    //random(myGameArea.canvas.width), random(canvas.height)));
-    }
-
-    if(enemies.length < 4){
-    enemies.push(new component(30, 30, "red",
-    random(480)+480, randomBetween(200, 250)));
-    //random(myGameArea.canvas.width), random(canvas.height)));
-    }
-
-    for (var i = 0; i < enemies.length; i++){
-        //add logic to take away first in array if the arrau is 10+
-        if (enemies[i].x < -10 ){
-            enemies.splice(i, 1);
-            //this is where you would add logic to gain points
-        }
-        if(myGamePiece.isColliding(enemies[i])){
-            loss = true;
-        }
-        //the second cube is being marked at colliding but the value is
-        //actually move each cube
-        enemies[i].x -= 1;
-
-        //update position
-        enemies[i].newPos();
-        enemies[i].update(); 
-    } 
-
-    for (var i = 0; i<friends.length; i++){
-        //add logic to take away first in array if the the cube reaches the end
-        if (friends[i].x < -10 ){
-            friends.splice(i, 1);
-            //this is where you would add logic to gain points
+        //make a new invader, prob inside the update function
+        //friends will hold components that are friends
+        if(friends.length < 4){
+        friends.push(new component(30, 30, "green",
+        random(480)+480, random(270)-20));
+        //random(myGameArea.canvas.width), random(canvas.height)));
         }
 
-        //power-up
-        if(myGamePiece.isColliding(friends[i])){
-            score+=1;
-            friends.splice(i, 1);
-            if (score >= 10) {
-                is10 = 1
+        if(enemies.length < 4){
+        enemies.push(new component(30, 30, "red",
+        random(480)+480, randomBetween(200, 250)));
+        //random(myGameArea.canvas.width), random(canvas.height)));
+        }
+
+        for (var i = 0; i < enemies.length; i++){
+            //add logic to take away first in array if the arrau is 10+
+            if (enemies[i].x < -10 ){
+                enemies.splice(i, 1);
+                //this is where you would add logic to gain points
             }
-    document.getElementById("score").innerHTML = score;        
-    console.log(score)
-          
-    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-6 }
-    if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =6 }
-    if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-6}
-    if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =6}
-    myGamePiece.newPos();    
-    myGamePiece.update();
-             console.log("green");
-             myGamePiece.newPos();    
-             myGamePiece.update();
-        }
-        //actually move each cube
-        friends[i].x -= 1;
+            if(myGamePiece.isColliding(enemies[i])){
+                loss = true;
+            }
+            //the second cube is being marked at colliding but the value is
+            //actually move each cube
+            enemies[i].x -= 1;
 
-        //update position
-        friends[i].newPos();
-        friends[i].update(); 
-    } 
+            //update position
+            enemies[i].newPos();
+            enemies[i].update(); 
+        } 
 
-}
+        for (var i = 0; i<friends.length; i++){
+            //add logic to take away first in array if the the cube reaches the end
+            if (friends[i].x < -10 ){
+                friends.splice(i, 1);
+                //this is where you would add logic to gain points
+            }
 
-    // if (is10) {youwin(); clearInterval(myGameArea.interval);}
+            //power-up
+            if(myGamePiece.isColliding(friends[i])){
+                score+=1;
+                friends.splice(i, 1);
+                if (score >= 10) {
+                    is10 = 1
+                }
+        document.getElementById("score").innerHTML = score;        
+        console.log(score)
+            
+        if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-6 }
+        if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =6 }
+        if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-6}
+        if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =6}
+        myGamePiece.newPos();    
+        myGamePiece.update();
+                console.log("green");
+                myGamePiece.newPos();    
+                myGamePiece.update();
+            }
+            //actually move each cube
+            friends[i].x -= 1;
+
+            //update position
+            friends[i].newPos();
+            friends[i].update(); 
+        } 
+
+    }
+    
+
+    if (is10) {
+        youwin(); clearInterval(myGameArea.interval);}
     
     if(loss){youLose();clearInterval(myGameArea.interval);}
 }
