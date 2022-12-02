@@ -107,6 +107,14 @@ class Background {
     }
 }
 
+let score = 0;
+
+function drawScore() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText(`Score: ${score}`, 8, 20);
+}
+
 function random(n) {
       return Math.floor(Math.random()*n);
 }
@@ -248,6 +256,8 @@ function updateGameArea() {
 
         //power-up
         if(myGamePiece.isColliding(friends[i])){
+            score+=1
+    console.log(score)
           
     if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-6 }
     if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =6 }
