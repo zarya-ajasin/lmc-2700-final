@@ -108,6 +108,7 @@ class Background {
 }
 
 let score = 0;
+let is10 = 0;
 
 function drawScore() {
   ctx.font = "16px Arial";
@@ -127,9 +128,13 @@ function randomBetween(min, max) {
 
 
 function startGame() {
+    score = 0
+    is10 = 0
     myGameArea.start();
     myGamePiece = new component(60, 60, "blue", 60, 200, 1);
-    setTimeout(youLose, 30000);
+    if (!is10) {
+        setTimeout(youLose, 30000);
+    }
 }
 
 
@@ -169,6 +174,7 @@ function component(width, height, color, x, y) {
     this.speedY = 0;    
     this.x = x;
     this.y = y;
+    this.exists = 1;
     this.update = function() {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
@@ -215,6 +221,8 @@ function updateGameArea() {
     myGamePiece.newPos();    
     myGamePiece.update();
 
+    if (!is10) {
+
     //make a new invader, prob inside the update function
     //friends will hold components that are friends
     if(friends.length < 4){
@@ -256,7 +264,12 @@ function updateGameArea() {
 
         //power-up
         if(myGamePiece.isColliding(friends[i])){
-            score+=1
+            score+=1;
+            friends.splice(i, 1);
+            if (score >= 10) {
+                is10 = 1
+            }
+    document.getElementById("score").innerHTML = score;        
     console.log(score)
           
     if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-6 }
@@ -276,12 +289,20 @@ function updateGameArea() {
         friends[i].newPos();
         friends[i].update(); 
     } 
+
+}
+
+    // if (is10) {youwin(); clearInterval(myGameArea.interval);}
     
     if(loss){youLose();clearInterval(myGameArea.interval);}
 }
 
+function youwin() {
+    alert("You Win! Now, collect the star");
+}
 //endgame
 function youLose() {
+
     alert("You Lose! Reload the page a few times to restart!");
     enemies(0,enemies.length);
 
@@ -403,7 +424,7 @@ var can = document.getElementById('canvas1');
 </script>
 <script src="main_javascript.js"></script>
 <p>use the arrow keys on you keyboard to move the square</p>
-
+<p id = "score"></p>
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script src="jquery.backgroundMove.js"></script>
 
