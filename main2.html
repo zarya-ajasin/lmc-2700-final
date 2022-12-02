@@ -12,7 +12,8 @@
     background-size: 980px 100px;
     background-position: bottom;
     background-repeat: no-repeat;
-	animation: change-color-anim 30s ease-in, move 2s ease-in-out;
+	animation:  move 2s ease-in-out, change-color-anim 30s ease-in;
+    /* move 2s ease-in-out */
     /* animation: move 2s; */
 
     
@@ -94,11 +95,15 @@ class Background {
         this.image = url(nightbg.png);
         this.x = 0;
         this.y - 0;
-        this.width = 2400;
-        this.height = 1648;
+        this.width = 300;
+        this.height = 1000;
+        this.speed = 20;
     }
     draw(canvas) {
-        canvas.drawImage(this.image, this.x, this.y);
+        canvas.drawImage(this.image, this.x, this.y, this.width, this.height);
+    }
+    update() {
+        this.x -= this.speed;
     }
 }
 
@@ -110,13 +115,16 @@ function random(n) {
 function randomBetween(min, max) {
   return Math.random() * (max - min) + min;
 }
-// const bgd = new Background(canvas.width, canvas.height);
+
+
 
 function startGame() {
     myGameArea.start();
     myGamePiece = new component(60, 60, "blue", 60, 200, 1);
     setTimeout(youLose, 30000);
 }
+
+
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
@@ -137,6 +145,11 @@ var myGameArea = {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
+
+const bgd = new Background(canvas.width, canvas.height);
+this.context = this.canvas.getContext("2d");
+bgd.draw(this.context);
+bgd.update();
 
 
 
