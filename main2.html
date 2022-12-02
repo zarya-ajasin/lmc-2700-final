@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
     
- canvas {
+canvas {
     /* background-color: #ffe2c2;
     background-image: "bgd.png"; */
     /* background: url(bgd.png) 0 0, #ffe2c2 -91px 0; */
@@ -15,8 +15,6 @@
 	animation:  move 2s ease-in-out, change-color-anim 30s ease-in;
     /* move 2s ease-in-out */
     /* animation: move 2s; */
-
-    
 } 
 #imagearea a {
     width: 480px;
@@ -78,7 +76,7 @@ from {background-position-x: + 5;}
     <!-- <div id = "imagearea" >
         <p id="area1"> <img src= "bgd.png"></p>
     </div> -->
-<script >
+<script>
 
 var myGamePiece;
 const enemies= [];
@@ -281,21 +279,12 @@ function updateGameArea() {
 
 //endgame
 function youLose() {
-    location.reload();
-    //alert("You Lose! Reload the page a few times to restart!");
-    enemies(0,enemies.length);
+    window.location.reload();
 
-    //here is where you would get a custom popup
-    document.getElementById('popup').style.display = "block";
-    //button to start game over
-    //button to go back to home page
-    document.getElementById("popupForm").style.display = "none";
-    document.getElementById(
-'close-btn').addEventListener('click', (e) => {
-            document.getElementById(
-'wrapper').style.visibility = "hidden";
-            window.location.reload();
-        });
+    // document.querySelector('.restart-btn').addEventListener('click', function() {
+    //     window.location.reload();
+    //     return false;
+    // })
 }
 
 function youWin() {
