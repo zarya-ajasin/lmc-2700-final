@@ -132,9 +132,6 @@ function startGame() {
     is10 = 0
     myGameArea.start();
     myGamePiece = new component(60, 60, "blue", 60, 200, 1);
-    if (!is10) {
-        setTimeout(youLose, 30000);
-    }
 }
 
 
@@ -208,7 +205,7 @@ function updateGameArea() {
     myGamePiece.speedY = 0;    
     
     
-    // canvas.backgroundMove();
+    //canvas.backgroundMove();
 
 
     //console.log(isCollidingVar);
@@ -237,7 +234,7 @@ function updateGameArea() {
     //random(myGameArea.canvas.width), random(canvas.height)));
     }
 
-    for (var i = 0; i<enemies.length; i++){
+    for (var i = 0; i < enemies.length; i++){
         //add logic to take away first in array if the arrau is 10+
         if (enemies[i].x < -10 ){
             enemies.splice(i, 1);
@@ -302,8 +299,8 @@ function youwin() {
 }
 //endgame
 function youLose() {
-
-    alert("You Lose! Reload the page a few times to restart!");
+    location.reload();
+    //alert("You Lose! Reload the page a few times to restart!");
     enemies(0,enemies.length);
 
     //here is where you would get a custom popup
