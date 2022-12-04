@@ -1,78 +1,76 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<style>
-    
-canvas {
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style> 
+            canvas {
 
-   /* background-image: "bgd.png"; */
-    /* background: url(bgd.png) 0 0, #ffe2c2 -91px 0; */
-    background: url(dirt.jpg) 0 0;
-    background-color: #ffe2c2;
-    background-size: 980px 100px;
-    background-position: bottom;
-    background-repeat: no-repeat;
-	/*animation:  move 2s ease-in-out, change-color-anim 30s ease-in;
-    /* move 2s ease-in-out */
-    /* animation: move 2s; */
-} 
-#imagearea a {
-    width: 480px;
-    height: 20px;
+            /* background-image: "bgd.png"; */
+                /* background: url(bgd.png) 0 0, #ffe2c2 -91px 0; */
+                background: url(dirt.jpg) 0 0;
+                background-color: #ffe2c2;
+                background-size: 980px 100px;
+                background-position: bottom;
+                background-repeat: no-repeat;
+                /*animation:  move 2s ease-in-out, change-color-anim 30s ease-in;
+                /* move 2s ease-in-out */
+                /* animation: move 2s; */
+            } 
+            #imagearea a {
+                width: 480px;
+                height: 20px;
 
-}
-#area1 {
-    top: 20px;
-    left: 20px;
-}
+            }
+            #area1 {
+                top: 20px;
+                left: 20px;
+            }
 
-#area2 {
-    top: 90px;
-    left: 40px;
-}
+            #area2 {
+                top: 90px;
+                left: 40px;
+            }
 
-@keyframes move {
-from {background-position: bottom right;}
-to {background-position: bottom left;}
-}
+            @keyframes move {
+            from {background-position: bottom right;}
+            to {background-position: bottom left;}
+            }
 
-@keyframes moving {
-from {background-position-x: + 5;}
-}
+            @keyframes moving {
+            from {background-position-x: + 5;}
+            }
 
-@keyframes change-color-anim {
-	0.0%{
-		background-color: #15102d;
-	}
-    12.5%{
-		background-color: #2D1D7A;
-	}
-    25.0%{
-		background-color: #573170;
-	}
-    37.5%{
-		background-color: #804565;
-	}
-    50.0%{
-		background-color: #AA585B;
-	}
-    62.5%{
-		background-color: #D36C50;
-	}
-    75.0%{
-		background-color: #FD8046;
-	}
-    87.5%{
-		background-color: #ffbc74;
-	}
-    100%{
-		background-color: #ffe2c2;
-	}
-} 
-
-</style>
-</head>
+            @keyframes change-color-anim {
+                0.0%{
+                    background-color: #15102d;
+                }
+                12.5%{
+                    background-color: #2D1D7A;
+                }
+                25.0%{
+                    background-color: #573170;
+                }
+                37.5%{
+                    background-color: #804565;
+                }
+                50.0%{
+                    background-color: #AA585B;
+                }
+                62.5%{
+                    background-color: #D36C50;
+                }
+                75.0%{
+                    background-color: #FD8046;
+                }
+                87.5%{
+                    background-color: #ffbc74;
+                }
+                100%{
+                    background-color: #ffe2c2;
+                }
+            } 
+        </style>
+    </head>
 <body onload="startGame()">
     <!-- <div id = "imagearea" >
         <p id="area1"> <img src= "bgd.png"></p>
@@ -83,7 +81,6 @@ from {background-position-x: + 5;}
     </a>
     <canvas id="canvas"> </canvas>
 <script>
-
 var myGamePiece;
 const enemies= [];
 const friends= [];
@@ -295,20 +292,35 @@ function updateGameArea() {
         } 
 
     }
-    
 
     if (is10) {
-        youwin(); clearInterval(myGameArea.interval);}
+        //openWin(); 
+        //clearInterval(myGameArea.interval);
+        enemies.length = 0;
+        friends.length = 0;
+    }
     
     if(loss){youLose();clearInterval(myGameArea.interval);}
 }
 
-function youwin() {
+
+
+//endgame
+let winPopup = document.getElementById("winPopup");
+function openWin() {
     alert("You Win! Now, collect the star");
 }
-//endgame
+
+function openPopup() {
+    popup.classList.add("open-win")
+}
+
+function closePopup() {
+    popup.classList.remove("open-popup");
+}
+
 function youLose() {
-    window.location.reload();
+    window.location.reload(); 
 
     // document.querySelector('.restart-btn').addEventListener('click', function() {
     //     window.location.reload();
@@ -316,13 +328,7 @@ function youLose() {
     // })
 }
 
-function youWin() {
-    // if the goal was touched it directs here
-    //button to home page
-    //button to next stage
-}
-
-function makeBgd() {
+function makeBgd() { 
     // inside main_javascript.js
  
 var can = document.getElementById('canvas1');
@@ -420,10 +426,18 @@ var can = document.getElementById('canvas1');
 
 </script>
 <script src="main_javascript.js"></script>
-<p>use the arrow keys on you keyboard to move the square</p>
-<p id = "score"></p>
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script src="jquery.backgroundMove.js"></script>
-
+    <div class = "container">
+        <p>use the arrow keys on you keyboard to move the square</p>
+        <p id = "score"></p>
+        
+        <div class ='winPopup' id="winPopup">
+            <h2>You Win!</h2>
+            <br>
+            <button type = "button" onclick="startGame()">Play Again</button>
+            <a href="start.html"><button type="button">Back Home</button></a>
+        </div>
+    </div>
 </body>
 </html>
