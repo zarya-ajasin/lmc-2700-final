@@ -86,7 +86,10 @@
         var newFriend = false;
         var enemySpeed = 1;
         var loss = false;
-
+        var witch = new Image();
+        witch.src = '708775.png';
+        var garlic = new Image();
+        garlic.src = 'garlic.jpg';
         class Background {
             constructor(gameWidth, gameHeight) {
                 this.gamewidth = gamewidth;
@@ -128,7 +131,7 @@
             score = 0
             is10 = 0
             myGameArea.start();
-            myGamePiece = new component(60, 60, "blue", 60, 200, 1);
+            myGamePiece = new component(60, 60, witch, 60, 200, 1);
             document.getElementById('startText').style.display = "block";
             document.getElementById('endgameText').style.display = "none";
             document.getElementById('winText').style.display = "none";
@@ -164,7 +167,7 @@
 
 
 
-        function component(width, height, color, x, y) {
+        function component(width, height, sprite, x, y) {
             this.gamearea = myGameArea;
             this.width = width;
             this.height = height;
@@ -175,8 +178,9 @@
             this.exists = 1;
             this.update = function() {
                 ctx = myGameArea.context;
-                ctx.fillStyle = color;
-                ctx.fillRect(this.x, this.y, this.width, this.height);
+                //ctx.fillStyle = color;
+                ctx.drawImage(sprite, this.x, this.y, this.width, this.height);
+               // ctx.fillRect(this.x, this.y, this.width, this.height);
             }
             this.newPos = function() {
                 this.x += this.speedX;
@@ -224,13 +228,13 @@
                 //make a new invader, prob inside the update function
                 //friends will hold components that are friends
                 if(friends.length < 4){
-                friends.push(new component(30, 30, "green",
+                friends.push(new component(30, 30, witch,
                 random(480)+480, random(270)-20));
                 //random(myGameArea.canvas.width), random(canvas.height)));
                 }
 
                 if(enemies.length < 4){
-                enemies.push(new component(30, 30, "red",
+                enemies.push(new component(30, 30, garlic,
                 random(480)+480, randomBetween(200, 250)));
                 //random(myGameArea.canvas.width), random(canvas.height)));
                 }
