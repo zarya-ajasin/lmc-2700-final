@@ -2,7 +2,11 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <body style="background-color:rgb(129, 176, 241);"></body>
+
         <style> 
+
             canvas {
 
             /* background-image: "bgd.png"; */
@@ -15,6 +19,9 @@
                 /*animation:  move 2s ease-in-out, change-color-anim 30s ease-in;
                 /* move 2s ease-in-out */
                 /* animation: move 2s; */
+                position: absolute;
+                top: 20%;
+                left:25%
             } 
             #imagearea a {
                 width: 480px;
@@ -69,6 +76,18 @@
                     background-color: #ffe2c2;
                 }
             } 
+
+            .homebtn{
+                padding: 10px 60px;
+                background: #fff;
+                border: 0;
+                outline: none;
+                position: absolute;
+                top:80%;
+                left: 44%;
+            }
+            
+
         </style>
     </head>
 <body onload="startGame()">
@@ -435,8 +454,7 @@ var can = document.getElementById('canvas1');
         <div class ='winPopup' id="winPopup">
             <h2>You Win!</h2>
             <br>
-            <button type = "button" onclick="startGame()">Play Again</button>
-            <a href="start.html"><button type="button">Back Home</button></a>
+            <button type = "button" onclick="startGame()" >Play Again</button>
         </div>
     </div>
 </body>
