@@ -12,7 +12,7 @@
             /* background-image: "bgd.png"; */
                 /* background: url(bgd.png) 0 0, #ffe2c2 -91px 0; */
                 background: url(dirt.jpg) 0 0;
-                background-color: #ffe2c2;
+                background-color: #3214e1;
                 background-size: 980px 100px;
                 background-position: bottom;
                 background-repeat: no-repeat;
@@ -105,10 +105,12 @@
         var newFriend = false;
         var enemySpeed = 1;
         var loss = false;
+        var mainCharater = new Image();
+        mainCharater.src = 'astronaut.png';
         var witch = new Image();
-        witch.src = '708775.png';
+        witch.src = 'star.png';
         var garlic = new Image();
-        garlic.src = 'garlic.jpg';
+        garlic.src = 'asteriod.png';
         class Background {
             constructor(gameWidth, gameHeight) {
                 this.gamewidth = gamewidth;
@@ -150,7 +152,7 @@
             score = 0
             is10 = 0
             myGameArea.start();
-            myGamePiece = new component(60, 60, witch, 60, 200, 1);
+            myGamePiece = new component(60, 60, mainCharater, 60, 200, 1);
             document.getElementById('startText').style.display = "block";
             document.getElementById('endgameText').style.display = "none";
             document.getElementById('winText').style.display = "none";
