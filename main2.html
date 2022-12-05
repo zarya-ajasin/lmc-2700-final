@@ -83,9 +83,13 @@
                 border: 0;
                 outline: none;
                 position: absolute;
-                top:80%;
+                top:85%;
                 left: 44%;
+                font-size: 18px;
+                border-radius: 4px;
+                cursor: pointer;
             }
+
             
 
         </style>
@@ -247,7 +251,12 @@
             if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-3}
             if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =3}
             myGamePiece.newPos();    
+            if(myGamePiece.x > 750) myGamePiece.x = 750;
+            if(myGamePiece.x < 0) myGamePiece.x = 0;
+            if(myGamePiece.y > 250) myGamePiece.y = 250;
+            if(myGamePiece.y < 0) myGamePiece.y = 0;
             myGamePiece.update();
+            console.log(myGamePiece.x);
 
             if (!is10) {
 
@@ -294,7 +303,7 @@
                     if(myGamePiece.isColliding(friends[i])){
                         score+=1;
                         friends.splice(i, 1);
-                        if (score >= 10) {
+                        if (score >= 20) {
                             is10 = 1
                         }
                         document.getElementById("score").innerHTML = score;        
