@@ -99,18 +99,26 @@
 
     <script>
         var myGamePiece;
+        var finalPiece;
         const enemies= [];
         const friends= [];
         var isCollidingVar;
         var newFriend = false;
         var enemySpeed = 1;
         var loss = false;
+
         var mainCharater = new Image();
         mainCharater.src = 'astronaut.png';
+
         var witch = new Image();
         witch.src = 'star.png';
+
         var garlic = new Image();
         garlic.src = 'asteriod.png';
+
+        var moonPoint = new Image();
+        moonPoint.src = 'moon.png';
+
         class Background {
             constructor(gameWidth, gameHeight) {
                 this.gamewidth = gamewidth;
@@ -179,14 +187,11 @@
             }
         }
 
-
         /*const bgd = new Background(canvas.width, canvas.height);
         this.context = this.canvas.getContext("2d");
         bgd.draw(this.context);
         bgd.update();
         */
-
-
 
         function component(width, height, sprite, x, y) {
             this.gamearea = myGameArea;
@@ -222,7 +227,7 @@
                 //if not colliding, keep speed at 1
             //   console.log("collide = false");
                 return false;
-        }   
+            }   
         }
 
         function updateGameArea() {
@@ -292,15 +297,17 @@
                         if (score >= 10) {
                             is10 = 1
                         }
-                document.getElementById("score").innerHTML = score;        
-                console.log(score)
-                    
-                if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-6 }
-                if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =6 }
-                if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-6}
-                if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =6}
-                myGamePiece.newPos();    
-                myGamePiece.update();
+                        document.getElementById("score").innerHTML = score;        
+                        console.log(score)
+                            
+                        if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-6 }
+                        if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =6 }
+                        if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-6}
+                        if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =6}
+                        
+                        myGamePiece.newPos();    
+                        
+                        myGamePiece.update();
                         console.log("green");
                         myGamePiece.newPos();    
                         myGamePiece.update();
@@ -316,8 +323,8 @@
             }
 
             if (is10) {
-                //openWin(); 
-                //clearInterval(myGameArea.interval);
+                openWin(); 
+                
                 enemies.length = 0;
                 friends.length = 0;
                 document.getElementById('startText').style.display = "none";
@@ -327,20 +334,19 @@
             if(loss){youLose();clearInterval(myGameArea.interval);}
         }
 
-
-
         //endgame
-        let winPopup = document.getElementById("winPopup");
         function openWin() {
-            alert("You Win! Now, collect the star");
-        }
+            //alert("You Win! Now, collect the star");
+            finalPiece = new component(70, 70, moonPoint, 60, 200, 1);
+            finalPiece.newPos();    
+            finalPiece.update();
 
-        function openPopup() {
-            popup.classList.add("open-win")
-        }
 
-        function closePopup() {
-            popup.classList.remove("open-popup");
+
+            if(myGamePiece.isColliding(finalPiece)){
+                document.getElementById('endgameText').style.display = "none";
+                document.getElementById('winText').style.display = "block";
+            }
         }
 
         function youLose() {
@@ -390,8 +396,7 @@
         
             // #move screen from arrowkeys
         
-            function loop()
-            {
+            function loop() {
                 // draw image 1
                 
                 ctx.drawImage(img, imgWidth, 0);
