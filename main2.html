@@ -8,8 +8,7 @@
         <style> 
 
             canvas {
-
-            /* background-image: "bgd.png"; */
+                /* background-image: "bgd.png"; */
                 /* background: url(bgd.png) 0 0, #ffe2c2 -91px 0; */
                 background: url(dirt.jpg) 0 0;
                 background-color: #3214e1;
@@ -20,9 +19,17 @@
                 /* move 2s ease-in-out */
                 /* animation: move 2s; */
                 position: absolute;
+                margin: auto;
                 top: 20%;
-                left:25%
+                left: 25%;
+                display: inline;
+
             } 
+            #canvas-container {
+                width: 100%;
+                text-align: center;
+            }
+
             #imagearea a {
                 width: 480px;
                 height: 20px;
@@ -38,59 +45,24 @@
                 left: 40px;
             }
 
-            @keyframes move {
-            from {background-position: bottom right;}
-            to {background-position: bottom left;}
-            }
-
-            @keyframes moving {
-            from {background-position-x: + 5;}
-            }
-
-            @keyframes change-color-anim {
-                0.0%{
-                    background-color: #15102d;
-                }
-                12.5%{
-                    background-color: #2D1D7A;
-                }
-                25.0%{
-                    background-color: #573170;
-                }
-                37.5%{
-                    background-color: #804565;
-                }
-                50.0%{
-                    background-color: #AA585B;
-                }
-                62.5%{
-                    background-color: #D36C50;
-                }
-                75.0%{
-                    background-color: #FD8046;
-                }
-                87.5%{
-                    background-color: #ffbc74;
-                }
-                100%{
-                    background-color: #ffe2c2;
-                }
-            } 
-
             .button{
-                padding: 10px 60px;
+                /*padding: 10px 60px;*/
                 background: #fff;
                 border: 0;
                 outline: none;
                 position: absolute;
-                top:85%;
-                left: 44%;
+                /*top:85%;
+                left: 44%;*/
                 font-size: 18px;
                 border-radius: 4px;
                 cursor: pointer;
+                display: inline-block;
             }
 
-            
+            #button-container {
+                top: 50%;
+                text-align: center;
+            }            
 
         </style>
     </head>
@@ -99,9 +71,12 @@
         <p id="area1"> <img src= "bgd.png"></p>
     </div> -->
 
-    <canvas id="canvas"></canvas>
+    <div id = "canvas-container">
+        <canvas id="canvas"></canvas>
+    </div>
 
     <script>
+        var flag = false;
         var myGamePiece;
         var finalPiece;
         const enemies= [];
@@ -110,6 +85,7 @@
         var newFriend = false;
         var enemySpeed = 1;
         var loss = false;
+        var win = false;
 
         var mainCharater = new Image();
         mainCharater.src = 'astronaut.png';
@@ -235,124 +211,166 @@
         }
 
         function updateGameArea() {
-            myGameArea.clear();
-            myGamePiece.speedX = 0;
-            myGamePiece.speedY = 0;    
-            
-            
-            //canvas.backgroundMove();
-
-
-            //console.log(isCollidingVar);
-        
-
-            if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-3 }
-            if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =3 }
-            if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-3}
-            if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =3}
-            myGamePiece.newPos();    
-            if(myGamePiece.x > 750) myGamePiece.x = 750;
-            if(myGamePiece.x < 0) myGamePiece.x = 0;
-            if(myGamePiece.y > 250) myGamePiece.y = 250;
-            if(myGamePiece.y < 0) myGamePiece.y = 0;
-            myGamePiece.update();
-            console.log(myGamePiece.x);
-
-            if (!is10) {
-
-                //make a new invader, prob inside the update function
-                //friends will hold components that are friends
-                if(friends.length < 4){
-                friends.push(new component(30, 30, witch,
-                random(480)+480, random(270)-20));
-                //random(myGameArea.canvas.width), random(canvas.height)));
-                }
-
-                if(enemies.length < 4){
-                enemies.push(new component(30, 30, garlic,
-                random(480)+480, randomBetween(200, 250)));
-                //random(myGameArea.canvas.width), random(canvas.height)));
-                }
-
-                for (var i = 0; i < enemies.length; i++){
-                    //add logic to take away first in array if the arrau is 10+
-                    if (enemies[i].x < -10 ){
-                        enemies.splice(i, 1);
-                        //this is where you would add logic to gain points
-                    }
-                    if(myGamePiece.isColliding(enemies[i])){
-                        loss = true;
-                    }
-                    //the second cube is being marked at colliding but the value is
-                    //actually move each cube
-                    enemies[i].x -= 1;
-
-                    //update position
-                    enemies[i].newPos();
-                    enemies[i].update(); 
-                } 
-
-                for (var i = 0; i<friends.length; i++){
-                    //add logic to take away first in array if the the cube reaches the end
-                    if (friends[i].x < -10 ){
-                        friends.splice(i, 1);
-                        //this is where you would add logic to gain points
-                    }
-
-                    //power-up
-                    if(myGamePiece.isColliding(friends[i])){
-                        score+=1;
-                        friends.splice(i, 1);
-                        if (score >= 20) {
-                            is10 = 1
-                        }
-                        document.getElementById("score").innerHTML = score;        
-                        console.log(score)
-                            
-                        if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-6 }
-                        if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =6 }
-                        if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-6}
-                        if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =6}
-                        
-                        myGamePiece.newPos();    
-                        
-                        myGamePiece.update();
-                        console.log("green");
-                        myGamePiece.newPos();    
-                        myGamePiece.update();
-                    }
-                    //actually move each cube
-                    friends[i].x -= 1;
-
-                    //update position
-                    friends[i].newPos();
-                    friends[i].update(); 
-                } 
-
-            }
-
-            if (is10) {
-                //openWin(); 
+            if (!flag) {
+                myGameArea.clear();
+                myGamePiece.speedX = 0;
+                myGamePiece.speedY = 0;    
                 
-                enemies.length = 0;
-                friends.length = 0;
-                document.getElementById('startText').style.display = "none";
-                document.getElementById('endgameText').style.display = "block";
+                
+                //canvas.backgroundMove();
 
-                finalPiece = new component(70, 70, moonPoint, random(480)+480, random(270)-20, 1);
 
-                if(myGamePiece.isColliding(finalPiece)){
-                    document.getElementById('endgameText').style.display = "none";
-                    document.getElementById('winText').style.display = "block";
-                } else {
+                //console.log(isCollidingVar);
+            
+
+                if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-3 }
+                if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =3 }
+                if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-3}
+                if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =3}
+                myGamePiece.newPos();    
+                if(myGamePiece.x > 750) myGamePiece.x = 750;
+                if(myGamePiece.x < 0) myGamePiece.x = 0;
+                if(myGamePiece.y > 250) myGamePiece.y = 250;
+                if(myGamePiece.y < 0) myGamePiece.y = 0;
+                myGamePiece.update();
+                console.log(myGamePiece.x);
+
+                if (!is10) {
+
+                    //make a new invader, prob inside the update function
+                    //friends will hold components that are friends
+                    if(friends.length < 4){
+                    friends.push(new component(30, 30, witch,
+                    random(480)+480, random(270)-20));
+                    //random(myGameArea.canvas.width), random(canvas.height)));
+                    }
+
+                    if(enemies.length < 4){
+                    enemies.push(new component(30, 30, garlic,
+                    random(480)+480, randomBetween(200, 250)));
+                    //random(myGameArea.canvas.width), random(canvas.height)));
+                    }
+
+                    for (var i = 0; i < enemies.length; i++){
+                        //add logic to take away first in array if the arrau is 10+
+                        if (enemies[i].x < -10 ){
+                            enemies.splice(i, 1);
+                            //this is where you would add logic to gain points
+                        }
+                        if(myGamePiece.isColliding(enemies[i])){
+                            loss = true;
+                        }
+                        //the second cube is being marked at colliding but the value is
+                        //actually move each cube
+                        enemies[i].x -= 1;
+
+                        //update position
+                        enemies[i].newPos();
+                        enemies[i].update(); 
+                    } 
+
+                    for (var i = 0; i<friends.length; i++){
+                        //add logic to take away first in array if the the cube reaches the end
+                        if (friends[i].x < -10 ){
+                            friends.splice(i, 1);
+                            //this is where you would add logic to gain points
+                        }
+
+                        //power-up
+                        if(myGamePiece.isColliding(friends[i])){
+                            score+=1;
+                            friends.splice(i, 1);
+                            if (score >= 20) {
+                                is10 = 1
+                            }
+                            document.getElementById("score").innerHTML = score;        
+                            console.log(score)
+                                
+                            if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX =-6 }
+                            if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX =6 }
+                            if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-6}
+                            if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =6}
+                            
+                            myGamePiece.newPos();    
+                            
+                            myGamePiece.update();
+                            console.log("green");
+                            myGamePiece.newPos();    
+                            myGamePiece.update();
+                        }
+                        //actually move each cube
+                        friends[i].x -= 1;
+
+                        //update position
+                        friends[i].newPos();
+                        friends[i].update(); 
+                    } 
+
+                }
+
+                if (is10) {
+                    //openWin(); 
+                    
+                    enemies.length = 0;
+                    friends.length = 0;
+                    document.getElementById('startText').style.display = "none";
+                    document.getElementById('endgameText').style.display = "block";
+
+
+                    finalPiece = new component(70, 70, moonPoint, 480, 10, 1); //random(480)+480
                     finalPiece.x -= 1;
                     finalPiece.speedX = -3;
                     finalPiece.newPos();    
                     finalPiece.update();
+
+                    if(myGamePiece.isColliding(finalPiece)){
+                        win = true;
+                    }
+
+                    if (win) {
+                        youWin();
+                    }
                 }
+                
+                if(loss){youLose();clearInterval(myGameArea.interval);}
             }
-            
-            if(loss){youLose();clearInterval(myGameArea.interval);}
+        }
+
+        function youWin() {
+            document.getElementById('endgameText').style.display = "none";
+            document.getElementById('winText').style.display = "block";
+
+            //Get context and screen size;
+            var ctx = canvas.getContext("2d");
+            var W = window.innerWidth;
+            var H = window.innerHeight;
+
+            //Set Canvas and Background Color;
+            //cnv.width = W;
+            //cnv.height = H;
+            //ctx.fillStyle = "#112";
+            //ctx.fillRect(0, 0, W, H);
+
+            //Glow effect;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "white";
+
+            function animate() {
+                //Random position and size of stars;
+                let x = W * Math.random();
+                let y = H * Math.random();
+                let r = 2.5 * Math.random();
+
+                //Draw the stars;
+                ctx.beginPath();
+                ctx.fillStyle = "white";
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+
+                //Using setTimeout instead of window.requestAnimationFrame for slower speed... window.requestAnimationFrame is approximately equal to setTimeout(func, 17);
+                setTimeout(animate, 100);
+            }
+            animate();
         }
 
         function youLose() {
@@ -479,6 +497,10 @@
     <p>Current Score: </p>
     <p id = "score"> 0</p>
     
-    <a href="start.html"><button class="button">Back Home</button></a>
+    <div id="button-container">
+        <a href="start.html"><button class="button">Back Home</button></a>
+        <button class="button" onclick="flag=!flag">Pause</button>
+    </div>
+    
 </body>
 </html>
