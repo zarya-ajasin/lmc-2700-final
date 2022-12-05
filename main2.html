@@ -247,7 +247,12 @@
             if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY =-3}
             if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY =3}
             myGamePiece.newPos();    
+            if(myGamePiece.x > 750) myGamePiece.x = 750;
+            if(myGamePiece.x < 0) myGamePiece.x = 0;
+            if(myGamePiece.y > 350) myGamePiece.y = 350;
+            if(myGamePiece.y < 0) myGamePiece.y = 0;
             myGamePiece.update();
+            console.log(myGamePiece.x);
 
             if (!is10) {
 
