@@ -2,7 +2,7 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-   font-family:'Poppins', sans-serif; 
+   /*font-family:'Poppins', sans-serif; */
 }
 
 body{
@@ -24,14 +24,6 @@ body{
     border-radius: 30px;
 
 }
-
-/*#myVideo {
-    position:absolute;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-  }*/
 
 .container{
     width: 100%;

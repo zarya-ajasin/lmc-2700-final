@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-<html lang = "en" onclick="jump()">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Game</title>
-    <link rel = "stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link rel="stylesheet" href="style1.css">
 </head>
-<body>
-    <div id="game">
-        <div id="character"></div>
-        <div id="block"></div>
-    </div>
-</body> 
-<script src = "script.js"></script>
+    <body>
+        <div class = "container">
+            <h1>Luna
+            </h1>
+            <a href="main.html">
+                <button class="playbtn">Play</button>
+            </a>
+            <button type = "howtoplay" class="btn" onclick="openPopup()">How To Play</button>
+            <div class ='popup' id="popup">
+                <h2>How To Play!</h2>
+                <p></p>
+                <h4>The object up the game is to collect 20 stars. You will be able to move arround
+                    using the arrow keys. Make sure to avoid the obstacles or you will loose and
+                    the game will restart. After collecting the stars, you will be prompted to 
+                    colelct the moon and win the game!!
+                </h4>
+                <button type="button" onclick="closePopup()">Close</button>
+            </div>
+        </div>
+        <script>
+            let popup = document.getElementById("popup");
+            function openPopup() {
+                popup.classList.add("open-popup");
+            }
+            function closePopup() {
+                popup.classList.remove("open-popup");
+            }
+            
+        </script>
+    </body>
 </html>
