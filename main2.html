@@ -62,6 +62,7 @@
             #button-container {
                 top: 50%;
                 text-align: center;
+                align-items: center;
             } 
             .but{
                 padding: 10px 60px;
@@ -75,7 +76,28 @@
                 border-radius: 4px;
                 cursor: pointer;
                 display: inline-block; 
-            }           
+                align-items: center;
+            }        
+            
+            #startText {
+                text-align: center;
+            }
+
+            #score {
+                text-align: center; 
+            }
+
+            #sc {
+                text-align: center;
+            }
+
+            #endgameText {
+                text-align: center;
+            }
+
+            #winText {
+                text-align: center;
+            }
 
         </style>
     </head>
@@ -507,7 +529,7 @@
         You win!!
         <button onclick="window.location.reload();">Restart Game</button>
     </h3>
-    <p>Current Score: </p>
+    <p id = 'sc'> Current Score: </p>
     <p id = "score"> 0</p>
     
     <div id="button-container">
